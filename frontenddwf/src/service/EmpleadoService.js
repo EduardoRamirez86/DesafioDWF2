@@ -153,26 +153,26 @@ export const deleteEmpleado = async (id) => {
       const deletedEmpleado = mockEmpleados.splice(index, 1);
       return deletedEmpleado[0];
     }
-    return null;
+    throw new Error("Empleado no encontrado.");
   }
   try {
     const response = await fetch(`http://localhost:8000/api/v1/empleado/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     });
 
-    const data = await response.json();
-    console.log('Datos:', data);
-
     if (!response.ok) {
-      console.log('Error en la respuesta:', data.message);
-      return null;
+      const data = await response.json();
+      console.error("Error en la respuesta:", data.message);
+      throw new Error(data.message || "Error al eliminar el empleado.");
     }
-    return data;
+
+    console.log(`Empleado con ID ${id} eliminado correctamente.`);
+    return true;
   } catch (error) {
-    console.log('Error al eliminar empleado:', error.message);
-    return null;
+    console.error("Error al eliminar empleado:", error.message);
+    throw error;
   }
 };

@@ -26,6 +26,10 @@ const ListadoEmpleados = () => {
     fetchEmpleados();
   }, []);
 
+  const handleDelete = (id) => {
+    setEmpleados((prevEmpleados) => prevEmpleados.filter((empleado) => empleado.id !== id));
+  };
+
   if (isLoading) {
     return (
       <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -58,7 +62,7 @@ const ListadoEmpleados = () => {
         <div className="card-container">
           {empleados.length > 0 ? (
             empleados.map((empleado) => (
-              <EmpleadoCard key={empleado.id} empleado={empleado} />
+              <EmpleadoCard key={empleado.id} empleado={empleado} onDelete={handleDelete} />
             ))
           ) : (
             <p>No hay empleados registrados.</p>

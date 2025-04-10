@@ -36,15 +36,15 @@ const EmpleadoFormulario = ({ empleadoInicial = null }) => {
     setError("");
     setIsLoading(true);
     try {
-      let response;
       if (empleadoInicial) {
         // Update existing employee
-        response = await updateEmpleado(empleadoInicial.id, empleado);
+        await updateEmpleado(empleadoInicial.id, empleado);
       } else {
         // Create new employee
-        response = await saveEmpleado(empleado);
+        await saveEmpleado(empleado);
       }
-      router.push(`/dashboard/ver-empleado/${response.id}`);
+      // Redirect to the employee list after successful creation or update
+      router.push("/dashboard/listado-empleados");
     } catch (err) {
       setError(err.message || "Error al guardar los datos del empleado.");
     } finally {
