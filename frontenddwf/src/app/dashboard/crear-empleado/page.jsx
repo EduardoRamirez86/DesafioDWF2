@@ -9,7 +9,7 @@ const CrearEmpleado = () => {
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
       <main className="container my-5">
-        <h2>Crear Nuevo Empleado</h2>
+        <h2 className="form-title">Crear Nuevo Empleado</h2>
         <EmpleadoFormulario />
       </main>
       <Footer />

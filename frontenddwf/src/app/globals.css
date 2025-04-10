@@ -1,11 +1,14 @@
 :root {
-  --primary-color: #4CAF50;
+  --primary-color: #6A5ACD; /* Purple-blue primary color */
   --secondary-color: #ffffff;
-  --background-color: #f4f4f9;
+  --background-color: #f3f4f6; /* Neutral light background */
   --text-color: #333333;
-  --border-radius: 12px;
-  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  --gradient: linear-gradient(135deg, #4CAF50, #81C784);
+  --heading-color: #4A4A8A; /* Darker purple for headings */
+  --input-background: #f9f9fc; /* Light background for inputs */
+  --input-text-color: #333333; /* Dark text for inputs */
+  --border-radius: 16px; /* Smooth corners */
+  --box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Softer shadow */
+  --gradient: linear-gradient(135deg, #6A5ACD, #836FFF); /* Purple gradient */
   --transition: all 0.3s ease-in-out;
   --background: #ffffff;
   --foreground: #171717;
@@ -13,8 +16,14 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #1a1a2e;
     --foreground: #ededed;
+    --primary-color: #836FFF;
+    --background-color: #1a1a2e;
+    --text-color: #ededed;
+    --heading-color: #a8a8ff;
+    --input-background: #2a2a3e;
+    --input-text-color: #ededed;
   }
 }
 
@@ -60,11 +69,11 @@ a {
 }
 
 a:hover {
-  color: #2e7d32;
+  color: #836FFF;
 }
 
 .container {
-  max-width: 1400px; /* Increase max width for larger content */
+  max-width: 1200px; /* Increase max width for larger content */
   margin: 0 auto;
   padding: 2rem; /* Increase padding for better spacing */
 }
@@ -101,7 +110,7 @@ header .logo:hover {
 }
 
 .nav a:hover {
-  color: #d4f8d4;
+  color: #d4d8ff;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -117,7 +126,7 @@ button {
 }
 
 button:hover {
-  background: #388e3c;
+  background: #5a4fcf;
   transform: translateY(-2px);
 }
 
@@ -163,6 +172,8 @@ button:hover {
   padding: 1rem; /* Increase input padding for larger fields */
   border: 1px solid #ccc;
   border-radius: var(--border-radius);
+  background: var(--input-background);
+  color: var(--input-text-color);
   transition: var(--transition);
   font-size: 1.1rem; /* Increase input font size */
 }
@@ -170,7 +181,7 @@ button:hover {
 .form-group input:focus {
   border-color: var(--primary-color);
   outline: none;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  box-shadow: 0 0 5px rgba(106, 90, 205, 0.5);
 }
 
 .button-group {
@@ -294,7 +305,7 @@ button:hover {
 }
 
 .nav a:hover {
-  color: #d4f8d4;
+  color: #d4d8ff;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -315,7 +326,7 @@ button:hover {
 }
 
 .user-button:hover {
-  color: #d4f8d4;
+  color: #d4d8ff;
 }
 
 .dropdown {
