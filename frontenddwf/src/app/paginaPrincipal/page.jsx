@@ -31,13 +31,13 @@ const Home = () => {
 
 const PaginaPrincipal = () => {
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
       <main>
         <Home />
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -1,7 +1,32 @@
 // /service/EmpleadoService.js
 
+const useMockData = true; // Set to true to use mock data instead of API
+
+const mockEmpleados = [
+  {
+    id: 1,
+    nombre: "Juan",
+    apellido: "Pérez",
+    email: "juan.perez@example.com",
+    fechaIngreso: "2023-01-15",
+    cargo: "Gerente de Ventas"
+  },
+  {
+    id: 2,
+    nombre: "María",
+    apellido: "Gómez",
+    email: "maria.gomez@example.com",
+    fechaIngreso: "2022-11-01",
+    cargo: "Analista de Datos"
+  }
+];
+
 // Obtener la lista de empleados.
 export const getEmpleados = async () => {
+  if (useMockData) {
+    console.log("Usando datos mock para empleados.");
+    return mockEmpleados;
+  }
   try {
     const response = await fetch('http://localhost:8000/api/v1/empleado', {
       method: 'GET',
@@ -27,6 +52,10 @@ export const getEmpleados = async () => {
 
 // Obtener un empleado por ID.
 export const getEmpleadoById = async (id) => {
+  if (useMockData) {
+    console.log(`Usando datos mock para empleado con ID: ${id}`);
+    return mockEmpleados.find((empleado) => empleado.id === parseInt(id)) || null;
+  }
   try {
     const response = await fetch(`http://localhost:8000/api/v1/empleado/${id}`, {
       method: 'GET',
@@ -51,6 +80,12 @@ export const getEmpleadoById = async (id) => {
 
 // Crear un nuevo empleado.
 export const saveEmpleado = async (empleado) => {
+  if (useMockData) {
+    console.log("Usando datos mock para crear empleado.");
+    const newEmpleado = { ...empleado, id: mockEmpleados.length + 1 };
+    mockEmpleados.push(newEmpleado);
+    return newEmpleado;
+  }
   try {
     const response = await fetch('http://localhost:8000/api/v1/empleado', {
       method: 'POST',
@@ -77,6 +112,15 @@ export const saveEmpleado = async (empleado) => {
 
 // Actualizar un empleado existente.
 export const updateEmpleado = async (id, empleado) => {
+  if (useMockData) {
+    console.log(`Usando datos mock para actualizar empleado con ID: ${id}`);
+    const index = mockEmpleados.findIndex((emp) => emp.id === parseInt(id));
+    if (index !== -1) {
+      mockEmpleados[index] = { ...mockEmpleados[index], ...empleado };
+      return mockEmpleados[index];
+    }
+    return null;
+  }
   try {
     const response = await fetch(`http://localhost:8000/api/v1/empleado/${id}`, {
       method: 'PUT',
@@ -102,6 +146,15 @@ export const updateEmpleado = async (id, empleado) => {
 
 // Eliminar un empleado.
 export const deleteEmpleado = async (id) => {
+  if (useMockData) {
+    console.log(`Usando datos mock para eliminar empleado con ID: ${id}`);
+    const index = mockEmpleados.findIndex((emp) => emp.id === parseInt(id));
+    if (index !== -1) {
+      const deletedEmpleado = mockEmpleados.splice(index, 1);
+      return deletedEmpleado[0];
+    }
+    return null;
+  }
   try {
     const response = await fetch(`http://localhost:8000/api/v1/empleado/${id}`, {
       method: 'DELETE',

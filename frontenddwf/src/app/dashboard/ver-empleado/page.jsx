@@ -13,60 +13,63 @@ const VerEmpleado = () => {
 
   useEffect(() => {
     const fetchEmpleado = async () => {
+      if (!id) {
+        setError("ID del empleado no proporcionado.");
+        return;
+      }
+
       setIsLoading(true);
       try {
         const { data } = await getEmpleadoById(id);
         setEmpleado(data);
       } catch (err) {
-        setError(err.message);
+        setError(err.message || "Error al obtener los datos del empleado.");
       } finally {
         setIsLoading(false);
       }
     };
 
-    if (id) {
-      fetchEmpleado();
-    }
+    fetchEmpleado();
   }, [id]);
 
   if (isLoading) {
     return (
-      <>
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <Header />
         <div className="container">
           <h2>Cargando empleado...</h2>
         </div>
         <Footer />
-      </>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <>
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <Header />
         <div className="container">
           <h2>Error: {error}</h2>
         </div>
         <Footer />
-      </>
+      </div>
     );
   }
 
   if (!empleado) {
     return (
-      <>
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
         <Header />
         <div className="container">
           <h2>No se encontró el empleado</h2>
         </div>
         <Footer />
-      </>
+      </div>
     );
   }
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
       <main className="container my-5">
         <h2>Detalle del Empleado</h2>
@@ -75,11 +78,10 @@ const VerEmpleado = () => {
           <p><strong>Email:</strong> {empleado.email}</p>
           <p><strong>Cargo:</strong> {empleado.cargo}</p>
           <p><strong>Fecha de Ingreso:</strong> {empleado.fechaIngreso}</p>
-          {/* Agrega más detalles según corresponda */}
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

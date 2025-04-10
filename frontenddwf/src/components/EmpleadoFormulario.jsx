@@ -20,11 +20,13 @@ const EmpleadoFormulario = () => {
 
   // Si existe el parámetro id, asume modo edición.
   useEffect(() => {
-    if (params?.id) {
-      const cargarEmpleado = async () => {
-        try {
-          setIsLoading(true);
-          const { data } = await getEmpleadoById(params.id);
+    if (!params?.id) return; // Validar si el id está disponible
+
+    const cargarEmpleado = async () => {
+      try {
+        setIsLoading(true);
+        const { data } = await getEmpleadoById(params.id);
+        if (data) {
           setEmpleado({
             nombre: data.nombre,
             apellido: data.apellido,
@@ -32,14 +34,17 @@ const EmpleadoFormulario = () => {
             fechaIngreso: data.fechaIngreso,
             cargo: data.cargo
           });
-          setIsLoading(false);
-        } catch (err) {
-          setError(err.message);
-          setIsLoading(false);
+        } else {
+          setError("No se encontró el empleado.");
         }
-      };
-      cargarEmpleado();
-    }
+      } catch (err) {
+        setError(err.message || "Error al cargar los datos del empleado.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    cargarEmpleado();
   }, [params?.id]);
 
   const handleChange = (e) => {
@@ -63,10 +68,9 @@ const EmpleadoFormulario = () => {
         // Crear nuevo empleado.
         response = await saveEmpleado(empleado);
       }
-      // Redirigir a la vista de detalle o listado tras la operación.
       router.push(`/dashboard/ver-empleado/${response.id}`);
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Error al guardar los datos del empleado.");
     } finally {
       setIsLoading(false);
     }
@@ -75,35 +79,74 @@ const EmpleadoFormulario = () => {
   return (
     <div className="form-container">
       {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit} className="form-container">
-        <div className="form-group">
-          <label htmlFor="nombre">Nombre</label>
-          <input type="text" id="nombre" name="nombre" placeholder="Nombre" value={empleado.nombre} onChange={handleChange} required />
+      <form onSubmit={handleSubmit}>
+        <h3 className="form-title">{params?.id ? 'Editar Empleado' : 'Crear Nuevo Empleado'}</h3>
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="nombre">Nombre</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              placeholder="Nombre"
+              value={empleado.nombre}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="apellido">Apellido</label>
+            <input
+              type="text"
+              id="apellido"
+              name="apellido"
+              placeholder="Apellido"
+              value={empleado.apellido}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
-
-        <div className="form-group">
-          <label htmlFor="apellido">Apellido</label>
-          <input type="text" id="apellido" name="apellido" placeholder="Apellido" value={empleado.apellido} onChange={handleChange} required />
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="email">Correo Electrónico</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="ejemplo@correo.com"
+              value={empleado.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="fechaIngreso">Fecha de Ingreso</label>
+            <input
+              type="date"
+              id="fechaIngreso"
+              name="fechaIngreso"
+              value={empleado.fechaIngreso}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
-
-        <div className="form-group">
-          <label htmlFor="email">Correo electrónico</label>
-          <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" value={empleado.email} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="fechaIngreso">Fecha de Ingreso</label>
-          <input type="date" id="fechaIngreso" name="fechaIngreso" value={empleado.fechaIngreso} onChange={handleChange} required />
-        </div>
-
         <div className="form-group">
           <label htmlFor="cargo">Cargo</label>
-          <input type="text" id="cargo" name="cargo" placeholder="Ej. Gerente de área" value={empleado.cargo} onChange={handleChange} required />
+          <input
+            type="text"
+            id="cargo"
+            name="cargo"
+            placeholder="Ej. Gerente de área"
+            value={empleado.cargo}
+            onChange={handleChange}
+            required
+          />
         </div>
-
         <div className="button-group">
           <button type="submit" disabled={isLoading}>
-            {isLoading ? (params?.id ? 'Editando empleado...' : 'Creando empleado...') : (params?.id ? 'Editar Empleado' : 'Crear Empleado')}
+            {isLoading ? 'Guardando...' : 'Guardar'}
           </button>
         </div>
       </form>
