@@ -75,7 +75,7 @@ const EmpleadoFormulario = () => {
   return (
     <div className="form-container">
       {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form-container">
         <div className="form-group">
           <label htmlFor="nombre">Nombre</label>
           <input type="text" id="nombre" name="nombre" placeholder="Nombre" value={empleado.nombre} onChange={handleChange} required />

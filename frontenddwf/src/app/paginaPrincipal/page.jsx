@@ -10,9 +10,11 @@ const Home = () => {
       <div className="logo-container">
         <img src="/img/Logo/logo_blanco.png" alt="Logo Empresa" className="logo" />
       </div>
-      <h2>Bienvenido al Sistema de Gestión de Recurso Humano</h2>
+      <h2 className="page-title">Bienvenido al Sistema de Gestión de Recurso Humano</h2>
+      <p className="page-description">
+        Accede a las funcionalidades principales del sistema desde las opciones a continuación.
+      </p>
       <div className="card-container">
-        {/* Aquí podrías agregar tarjetas con enlaces a secciones importantes */}
         <a href="/dashboard/crear-empleado" className="card">
           <h3>Crear Empleado</h3>
         </a>

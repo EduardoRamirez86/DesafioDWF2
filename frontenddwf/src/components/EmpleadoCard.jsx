@@ -25,11 +25,11 @@ const EmpleadoCard = ({ empleado }) => {
       <p><strong>Email:</strong> {empleado.email}</p>
       <p><strong>Cargo:</strong> {empleado.cargo}</p>
       <p><strong>Fecha de Ingreso:</strong> {empleado.fechaIngreso}</p>
-      <div className="card-actions">
+      <div className="card-actions" style={{ marginTop: '1rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
         <Link href={`/dashboard/editar-empleado/${empleado.id}`}>
-          <button>Editar</button>
+          <button className="action-button">Editar</button>
         </Link>
-        <button onClick={handleDelete}>Eliminar</button>
+        <button className="action-button" onClick={handleDelete}>Eliminar</button>
       </div>
     </div>
   );
